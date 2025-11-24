@@ -154,6 +154,43 @@ app.post('/orders', async (req, res) => {
     }
 });
 
+// Route: PUT /lessons/:id - Update lesson attributes
+app.put('/lessons/:id', async (req, res) => {
+    try {
+        const lessonId = req.params.id;
+        const updates = req.body;
+
+        // Validate ObjectId
+        if (!ObjectId.isValid(lessonId)) {
+            return res.status(400).json({ error: 'Invalid lesson ID' });
+        }
+
+        // Remove _id from updates if present
+        delete updates._id;
+
+        // Update the lesson
+        const result = await db.collection('lessons').updateOne(
+            { _id: new ObjectId(lessonId) },
+            { $set: updates }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ error: 'Lesson not found' });
+        }
+
+        // Fetch and return updated lesson
+        const updatedLesson = await db.collection('lessons').findOne({ _id: new ObjectId(lessonId) });
+
+        res.json({
+            message: 'Lesson updated successfully',
+            lesson: updatedLesson
+        });
+    } catch (error) {
+        console.error('Error updating lesson:', error);
+        res.status(500).json({ error: 'Failed to update lesson' });
+    }
+});
+
 // Error handler
 app.use((err, req, res, next) => {
     console.error('Server error:', err);
