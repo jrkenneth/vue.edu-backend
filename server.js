@@ -74,6 +74,37 @@ app.get('/lessons', async (req, res) => {
     }
 });
 
+// Route: GET /search - Search lessons by query
+app.get('/search', async (req, res) => {
+    try {
+        const query = req.query.q || '';
+        
+        if (query.trim() === '') {
+            // If no query, return all lessons
+            const lessons = await db.collection('lessons').find({}).toArray();
+            return res.json(lessons);
+        }
+
+        // Create a case-insensitive regex pattern
+        const searchPattern = new RegExp(query, 'i');
+
+        // Search across multiple fields
+        const lessons = await db.collection('lessons').find({
+            $or: [
+                { subject: searchPattern },
+                { location: searchPattern },
+                { instructor: searchPattern },
+                { price: isNaN(query) ? null : parseInt(query) }
+            ]
+        }).toArray();
+
+        res.json(lessons);
+    } catch (error) {
+        console.error('Error searching lessons:', error);
+        res.status(500).json({ error: 'Failed to search lessons' });
+    }
+});
+
 // Error handler
 app.use((err, req, res, next) => {
     console.error('Server error:', err);
