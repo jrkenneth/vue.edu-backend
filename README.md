@@ -3,7 +3,7 @@
 Express.js REST API for the EduClass after-school activities booking system.
 
 ## Live API
-🌐 Render.com URL: [YOUR_RENDER_URL_HERE]
+🌐 Render.com URL: [MY_RENDER_URL_HERE]
 
 ## Endpoints
 
