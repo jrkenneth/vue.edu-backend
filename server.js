@@ -7,8 +7,8 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MongoDB connection URI - Replace with your MongoDB Atlas URI
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority';
+// MongoDB connection URI
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://educlassuser:S0yRyqBvIofpWJNy@cluster0.uxkgluu.mongodb.net/?appName=Cluster0&retryWrites=true&w=majority';
 const DB_NAME = 'educlass';
 
 let db;
