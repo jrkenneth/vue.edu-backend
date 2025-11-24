@@ -191,6 +191,26 @@ app.put('/lessons/:id', async (req, res) => {
     }
 });
 
+// Root route
+app.get('/', (req, res) => {
+    res.json({
+        message: 'EduClass API Server',
+        version: '1.0.0',
+        endpoints: {
+            lessons: 'GET /lessons',
+            search: 'GET /search?q=query',
+            createOrder: 'POST /orders',
+            updateLesson: 'PUT /lessons/:id',
+            images: 'GET /images/:filename'
+        }
+    });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});
+
 // Error handler
 app.use((err, req, res, next) => {
     console.error('Server error:', err);
