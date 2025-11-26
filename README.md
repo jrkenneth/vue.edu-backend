@@ -22,7 +22,7 @@ Express.js REST API for the EduClass after-school activities booking system.
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/jrkenneth/vue.edu-backend.git
+   git clone https://github.com/jrkenneth/express.edu-backend.git
 ```
 
 2. Install dependencies:
